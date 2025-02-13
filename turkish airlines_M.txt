@@ -1,0 +1,12 @@
+let
+    Source = Table.Combine({Movies, #"Table002 (Page 2)", #"Table003 (Page 3)", #"Table004 (Page 4)", #"Table005 (Page 5)", #"Table006 (Page 6)", #"Table007 (Page 7)", #"Table008 (Page 8)", #"Table009 (Page 9)", #"Table010 (Page 10)", #"Table011 (Page 11)", #"Table012 (Page 12)", #"Table013 (Page 13)", #"Table014 (Page 14)", #"Table015 (Page 15)", #"Table016 (Page 16)", #"Table017 (Page 17)", #"Table018 (Page 18)", #"Table019 (Page 19)", #"Table020 (Page 20)", #"Table021 (Page 21)", #"Table022 (Page 22)", #"Table023 (Page 23)", #"Table024 (Page 24)", #"Table025 (Page 25)", #"Table026 (Page 26)", #"Table027 (Page 27)", #"Table028 (Page 28)", #"Table029 (Page 29)", #"Table030 (Page 30)", #"Table031 (Page 31)", #"Table033 (Page 33)", #"Table032 (Page 32)", #"Table034 (Page 34)", #"Table035 (Page 35)", #"Table036 (Page 36)", #"Table037 (Page 37)", #"Table038 (Page 38)", #"Table039 (Page 39)", #"Table040 (Page 40)", #"Table041 (Page 41)"}),
+    #"Filtered Rows" = Table.SelectRows(Source, each ([Column3] = "Animation - Animasyon" or [Column3] = "Award Winners - Ödüllü Filmler" or [Column3] = "Best Series - En iyi Seriler" or [Column3] = "Blockbuster - Kapalı Gişe" or [Column3] = "CATEGORY - KATEGORİ" or [Column3] = "Hidden Gems - Gizli Cevherler" or [Column3] = "New Releases - Yeni Filmler" or [Column3] = "Others - Diğerleri" or [Column3] = "True Stories - Gerçek Hikayeler" or [Column3] = "Turkish Cinema - Türk Sineması" or [Column3] = "World Cinema - Dünya Sineması")),
+    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"Column2", "Column9"}),
+    #"Promoted Headers" = Table.PromoteHeaders(#"Removed Columns", [PromoteAllScalars=true]),
+    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CATEGORY - KATEGORİ", type text}, {"TİTLE - BAŞLIK", type text}, {"IMDB", type number}, {"R/T - SÜRE", type time}}),
+    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"CATEGORY - KATEGORİ", "Category"}, {"TİTLE - BAŞLIK", "Film"}, {"R/T - SÜRE", "Runtime"}}),
+    #"Extracted Text Before Delimiter" = Table.TransformColumns(#"Renamed Columns", {{"Category", each Text.BeforeDelimiter(_, "-"), type text}}),
+    #"Added Index" = Table.AddIndexColumn(#"Extracted Text Before Delimiter", "Index", 1, 0, Int64.Type),
+    #"Renamed Columns1" = Table.RenameColumns(#"Added Index",{{"Index", "aggregate"}})
+in
+    #"Renamed Columns1"
