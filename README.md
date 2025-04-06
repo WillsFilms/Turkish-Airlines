@@ -1,4 +1,5 @@
 # **Turkish Airlines pdf transformation project**
+## Background
 This was a quick project inspired after my girlfriend was travelling overseas via Turkish Airlines (other airlines are available) and received a pdf file. The pdf file contained a table split over multiple pages containing information on the various films that were available to watch on the flight (in repository). She knew I was a data nerd so wondered whether I would be able to find a way to process this unstructured data and produce some analysis to help her pick a film.
 
 ![image](https://github.com/user-attachments/assets/2f7ec126-3e17-4071-9ddd-99709928c145)
@@ -61,3 +62,6 @@ I have set up a page in the report with the top 10 bar chart combined with a sli
 This `pbix` file can be found in this repository.
 
 Thanks for reading! :) 
+
+# Notes
+This could be done with `Power Query` within `MS Excel` to extract the data into an Excel spreadsheet; the fundamental processing steps would remain the same and would allow you to produce and save data from the pdf with fewer steps.
